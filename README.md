@@ -1,1 +1,5 @@
-# angular-playground-gcanavero
+# AngularCourse
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25.
+
+_Canavero Gianni_
