@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
-import {Recipe} from "../Recipe.model";
-
+import { Recipe } from '../recipe.model';
+import { DataStorageService } from 'src/app/shared/data-storage.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -10,15 +10,28 @@ import {Recipe} from "../Recipe.model";
 })
 export class RecipeListComponent implements OnInit {
 
-  recipes:Recipe[]=[
-    new Recipe("A test recipe","Simply a test","https://i.imgur.com/fMdnwbd.jpg"),
-    new Recipe("Second test recipe","Simply a test","https://i.imgur.com/fMdnwbd.jpg"),
-    new Recipe("Third test recipe","Simply a test","https://i.imgur.com/fMdnwbd.jpg")
+  @Output() recipeWasSelected = new EventEmitter<Recipe>();
+
+  recipes: Recipe[] = [
+    // new Recipe('A Test Recipe', 'This is a simple test', 'https://cdn.pixabay.com/photo/2016/06/15/19/09/food-1459693_960_720.jpg'),
+    // new Recipe('', '', ''),
+    // new Recipe('', '', ''),
+    // new Recipe('', '', ''),
+    // new Recipe('', '', ''),
+    // new Recipe('', '', '')
   ]
 
-  constructor() { }
+  constructor(private dataStorageService: DataStorageService) { }
 
   ngOnInit(): void {
+    this.dataStorageService.sendGetRequest('recipes').subscribe((data: Recipe[]) => {
+      console.log(data);
+      this.recipes = data;
+    });
+  }
+
+  onRecipeSelected(recipe: Recipe) {
+    this.recipeWasSelected.emit(recipe);
   }
 
 }
