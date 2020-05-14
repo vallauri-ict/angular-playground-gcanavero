@@ -1,5 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Recipe } from '../recipe.model';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
 
@@ -9,25 +8,20 @@ import { DataStorageService } from 'src/app/shared/data-storage.service';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent implements OnInit {
-
   @Output() recipeWasSelected = new EventEmitter<Recipe>();
 
   recipes: Recipe[] = [
-    // new Recipe('A Test Recipe', 'This is a simple test', 'https://cdn.pixabay.com/photo/2016/06/15/19/09/food-1459693_960_720.jpg'),
-    // new Recipe('', '', ''),
-    // new Recipe('', '', ''),
-    // new Recipe('', '', ''),
-    // new Recipe('', '', ''),
-    // new Recipe('', '', '')
-  ]
+    //new Recipe("Test", "Descrizione", "https://images.fidhouse.com/fidelitynews/wp-content/uploads/sites/6/2019/11/Come-pastorizzare-le-uova-7.jpg?w=580")
+    //new Recipe("", "", "")
+  ];
 
-  constructor(private dataStorageService: DataStorageService) { }
+  constructor(private dataStorageservice: DataStorageService) { }
 
   ngOnInit(): void {
-    this.dataStorageService.sendGetRequest('recipes').subscribe((data: Recipe[]) => {
+    this.dataStorageservice.sendGetRequest('recipes').subscribe((data:any[])=>{
       console.log(data);
-      this.recipes = data;
-    });
+      this.recipes=data;
+    })
   }
 
   onRecipeSelected(recipe: Recipe) {
